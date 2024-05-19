@@ -7,7 +7,7 @@ const Navbar = () => {
         
         <nav className='navbar'>
             <a href="/">HOME</a>
-            <a href="/register">ABOUT</a>
+            <a href="/register">REGISTER</a>
             <a href="/login">STUDENT</a>
             <a href="/adlogin">ADMIN</a>
             <a href="/login">CONTACT</a>

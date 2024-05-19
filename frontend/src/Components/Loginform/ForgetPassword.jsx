@@ -120,7 +120,7 @@ function ForgetPassword() {
           </div>
 
           <button onClick={handleforgetPassword} type="submit">
-            Register
+            Submit
           </button>
 
           <div className="reglink">

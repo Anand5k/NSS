@@ -28,7 +28,7 @@ function Adloginform () {
             timer: 2000
           });
 
-          navigate("/logres")
+          navigate('/Regres', { state: { email } });
         } catch (error) {
           console.error('Error Admin logging in:', error.response.data.error);
           setError('Invalid credentials. Please try again.');
@@ -50,7 +50,7 @@ function Adloginform () {
         <div className="adlnbg">
             <div className='wrapper-adln'>
                 <form onSubmit={handleAdLogin}>
-                    <h1>Sign in</h1>
+                    <h1>Admin Sign in</h1>
                     <div className='input-box'>
                         <input type='text' placeholder='Email' value={email} onChange={(e) => setProid(e.target.value)} required />
                         <FaUser className='icon'/>
@@ -60,10 +60,7 @@ function Adloginform () {
                         <RiLockPasswordFill className='icon'/>
                     </div>
 
-                    <div className='Remember'>
-                        <label><input type='checkbox' />Remember Me</label>
-                        
-                    </div>
+                    
 
                     <button type='submit'>Login</button>
 

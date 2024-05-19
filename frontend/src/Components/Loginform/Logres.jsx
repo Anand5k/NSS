@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, useLocation} from 'react-router-dom';
 import axios from 'axios';
 import Navbar from './Navbar';
@@ -183,9 +183,7 @@ function Logres() {
           <div className="Rememberlg1">
             <button onClick={goToUserDetails}>Personal Details</button>
           </div>
-          {/* <div className="Rememberlg2"> */}
-            {/* <Link to="/user/manuals">Manual Details</Link> */}
-          {/* </div> */}
+          
           <div className="Rememberlg2">
             <button onClick={goToUserManuals}>Unit Manuals</button>
           </div>

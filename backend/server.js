@@ -69,20 +69,28 @@ app.post('/signup', async (req, res) => {
 
 app.post('/forgetPassword', async (req, res) => {
   try {
-    const {  rollno,   email,  password } = req.body;
-    const result = await db.query('SELECT * FROM volunteers WHERE volunteer_id = $1 and email = $2', [rollno,email]);
+    const { rollno, email, password } = req.body;
+    
+    // Check if the user exists
+    const result = await db.query('SELECT * FROM volunteers WHERE volunteer_id = $1 AND email = $2', [rollno, email]);
     if (result.rows.length === 0) {
-      return res.status(401).json({ error: 'user not exists' });
+      return res.status(401).json({ error: 'User not exists' });
     }
+
+    // Hash the new password
     const hashedPassword = await bcrypt.hash(password, 10);
-    await db.query('UPDATE volunteers set password=$3 where volunteer_id=$1 and email=$2 ', [rollno, email, hashedPassword,]);
-    console.log('changed succesfully');
+    
+    // Update the user's password
+    await db.query('UPDATE volunteers SET password = $3 WHERE volunteer_id = $1 AND email = $2', [rollno, email, hashedPassword]);
+    
+    console.log('Password changed successfully');
     res.status(201).json({ message: 'User Password updated successfully' });
   } catch (error) {
-    console.error('Error changing password up:', error);
+    console.error('Error changing password:', error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
+
 
 app.post('/login', async (req, res) => {
   try {
@@ -209,7 +217,7 @@ app.get('/manuals', async (req, res) => {
 
   try {
     // Query the database to fetch manuals based on unit
-    const query = 'SELECT * FROM manuals WHERE unit_no = $1';
+    const query = 'SELECT * FROM manuals WHERE unit_no = $1 ORDER BY manual_id ASC';
     const result = await db.query(query, [unit]);
 
     // Check if manuals with the provided unit exist
@@ -512,6 +520,45 @@ app.get('/user/unitManualsConducted', async (req, res) => {
   }
 });
 
+app.get('/Ad/unitDetails', async (req, res) => {
+  // Extract user_id from query parameters
+  const { unit } = req.query;
+
+  // Check if user_id is provided
+  if (!unit) {
+    return res.status(400).json({ error: 'User Unit is required' });
+  }
+
+  try {
+    // Query the database to fetch the user's name based on user_id
+    const query = 'SELECT * FROM unit where unit_no= $1';
+    const result = await db.query(query, [unit]);
+
+    // Check if user with the provided user_id exists
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'unit not found' });
+    }
+
+    // Extract the user's name from the database result
+    const AdUnitManualsConducted = result.rows[0].manuals_conducted;
+    const AdUnitGS = result.rows[0].general_secretory;
+    const AdUnitJS = result.rows[0].junior_secretory;
+    const AdUnitVolunteers = result.rows[0].no_of_volunteers;
+
+    // Send the user's name in the response
+    res.json({ unitManualsConducted: AdUnitManualsConducted,
+              unitGS: AdUnitGS,
+              unitJS: AdUnitJS,
+              unitVolunteers: AdUnitVolunteers
+     });
+     
+   
+    
+  } catch (error) {
+    console.error('Error fetching user Unit Manuals Conducted:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
 
 app.post('/Adlogin', async (req, res) => {
   try {
@@ -523,16 +570,196 @@ app.post('/Adlogin', async (req, res) => {
     const user = result.rows[0];
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
-      return res.status(401).json({ error: 'Invalid username or password' }),
-      console.log('Incorrect Rollno or Password');
+      return res.status(401).json({ error: 'Invalid username or password' });
     }
     res.json({ message: 'Admin Login successful' });
-    console.log('Admin Login Sucess');
   } catch (error) {
     console.error('Error admin logging in:', error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
+
+app.get('/Ad/attendence', async (req, res) => {
+  const { unit } = req.query;
+
+  if (!unit) {
+    return res.status(400).json({ error: 'Unit is required' });
+  }
+
+  try {
+    // Define the attendance query
+    const attendanceQuery = `
+      WITH manual_participation AS (
+          SELECT
+              m.manual_id,
+              m.theme,
+              COUNT(p.volunteer_id) AS no_of_present
+          FROM
+              manuals m
+          LEFT JOIN
+              participations p ON m.manual_id = p.manual_id
+          WHERE
+              m.unit_no = $1
+          GROUP BY
+              m.manual_id, m.theme
+      ),
+      volunteer_counts AS (
+          SELECT
+              COUNT(volunteer_id) AS total_volunteers
+          FROM
+              volunteers
+          WHERE
+              unit_no = $1
+      ),
+      absentees AS (
+          SELECT
+              m.manual_id,
+              STRING_AGG(v.volunteer_id::TEXT, ', ') AS absentees_volunteer_id
+          FROM
+              manuals m
+          CROSS JOIN
+              volunteers v
+          LEFT JOIN
+              participations p ON m.manual_id = p.manual_id AND v.volunteer_id = p.volunteer_id
+          WHERE
+              v.unit_no = $1 AND p.volunteer_id IS NULL
+              AND m.unit_no = $1
+          GROUP BY
+              m.manual_id
+      )
+      SELECT
+          mp.manual_id,
+          mp.theme,
+          mp.no_of_present,
+          vc.total_volunteers - mp.no_of_present AS no_of_absent,
+          COALESCE(a.absentees_volunteer_id, '') AS absentees_volunteer_id
+      FROM
+          manual_participation mp
+      CROSS JOIN
+          volunteer_counts vc
+      LEFT JOIN
+          absentees a ON mp.manual_id = a.manual_id
+          ORDER BY
+          mp.manual_id ASC;
+    `;
+
+    // Execute the query with the given unit_no
+    const result = await db.query(attendanceQuery, [unit]);
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'Attendance not found' });
+    }
+
+    res.json({ attendence: result.rows });
+  } catch (error) {
+    console.error('Error fetching attendance:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+app.get('/Ad/ID_name', async (req, res) => {
+  // Extract user_id from query parameters
+  const { email } = req.query;
+
+  // Check if user_id is provided
+  if (!email) {
+    return res.status(400).json({ error: 'Admin Email is required' });
+  }
+
+  try {
+    // Query the database to fetch the user's name based on user_id
+    const query = 'SELECT pro_id, name from program_officers where email= $1';
+    const result = await db.query(query, [email]);
+
+    // Check if user with the provided user_id exists
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'Admin pro_id,name not found' });
+    }
+
+    // Extract the user's name from the database result
+    const AdID = result.rows[0].pro_id;
+    const AdName = result.rows[0].name; 
+
+    // Send the user's name in the response
+    res.json({ proid: AdID,
+               AdName: AdName
+     });
+     
+  app.get('/user/unitManualsConducted', async (req, res) => {
+  // Extract user_id from query parameters
+  const { unit } = req.query;
+
+  // Check if user_id is provided
+  if (!unit) {
+    return res.status(400).json({ error: 'User Unit is required' });
+  }
+
+  try {
+    // Query the database to fetch the user's name based on user_id
+    const query = 'SELECT manuals_conducted FROM unit where unit_no= $1';
+    const result = await db.query(query, [unit]);
+
+    // Check if user with the provided user_id exists
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'unit not found' });
+    }
+
+    // Extract the user's name from the database result
+    const userUnitManualsConducted = result.rows[0].manuals_conducted;
+
+    // Send the user's name in the response
+    res.json({ unitManualsConducted: userUnitManualsConducted });
+     
+   
+    
+  } catch (error) {
+    console.error('Error fetching user Unit Manuals Conducted:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+app.get('/Ad/unit', async (req, res) => {
+  // Extract user_id from query parameters
+  const { pro_id } = req.query;
+
+  // Check if user_id is provided
+  if (!pro_id) {
+    return res.status(400).json({ error: 'Admin pro_id is required' });
+  }
+
+  try {
+    // Query the database to fetch the user's name based on user_id
+    const query = 'SELECT unit_no FROM unit where pro_id= $1';
+    const result = await db.query(query, [pro_id]);
+
+    // Check if user with the provided user_id exists
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'unit not found for given pro_id' });
+    }
+
+    // Extract the user's name from the database result
+    const Adunit = result.rows[0].unit_no;
+
+    // Send the user's name in the response
+    res.json({ AdUnit: Adunit });
+     
+   
+    
+  } catch (error) {
+    console.error('Error fetching Admin Unit_no:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+    
+  } catch (error) {
+    console.error('Error fetching Admin pro_id and name:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+
+
 
 
 app.listen(PORT, () => {

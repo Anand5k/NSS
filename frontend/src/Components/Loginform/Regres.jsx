@@ -1,24 +1,155 @@
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useLocation} from 'react-router-dom';
+import axios from 'axios';
+import Navbar from './Navbar';
 import './Regres.css';
-import Navbar from './Navbar'
-function Regres () {
-    return(
-        <>
-        <Navbar/>
-    <div className="rrgbg">
-        <div className='wrapper-rrg'>
-                <h1>Successfully Signed up!</h1>
 
-                <div className='reglink'>
-                    <p>Need to Login? <a href="/login">Clickhere</a></p>
-                </div>
-                <div className='reglink'>
-                    <p>Need Homepage? <a href="/">Clickhere</a></p>
-                </div>
+
+function Logres() {
+    const navigate = useNavigate();
+    const location = useLocation();
+    const [AdEmail, setAdEmail] = useState('');
+
+    useEffect(() => {
+        const { email } = location.state || {};
+        setAdEmail(email || '');  // Default to empty string if rollno is undefined
+    }, [location.state]);
+
+
+  const [AdID, setAdID] = useState('');
+  const [AdName, setAdName] = useState('');
+  const [AdUnit, setAdUnit] = useState('');
+  const [unitManualsConducted, setUnitManualsConducted] =  useState('');
+  const [unitGS, setUnitGS]= useState('');
+  const [unitJS, setUnitJS]= useState('');
+  const [unitVolunteers, setUnitVolunteers]= useState('');
+  useEffect(() => {
+    const fetchAdID_Name = async () => {
+      try {
+        const response = await axios.get(`http://localhost:5000/Ad/ID_name`, {
+          params: { email: AdEmail },
+        });
+        setAdID(response.data.proid);
+        setAdName(response.data.AdName);
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    };
+    if (AdEmail) {
+      fetchAdID_Name();
+    }
+  }, [AdEmail]);
+
+  useEffect(() => {
+    const fetchAdUnit = async () => {
+      try {
+        const response = await axios.get(`http://localhost:5000/Ad/unit`, {
+          params: { pro_id: AdID },
+        });
+        
+        setAdUnit(response.data.AdUnit);
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    };
+    if (AdEmail) {
+      fetchAdUnit();
+    }
+  }, [AdID]);
+
+  useEffect(() => {
+    const fetchUnitDetails = async () => {
+      try {
+        const response = await axios.get(`http://localhost:5000/Ad/unitDetails`,{
+            params: { unit: AdUnit },
+          }
+        );
+        setUnitManualsConducted(response.data.unitManualsConducted);
+        setUnitGS(response.data.unitGS);
+        setUnitJS(response.data.unitJS);
+        setUnitVolunteers(response.data.unitVolunteers);
+
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    };
+    if (AdUnit) {
+      fetchUnitDetails();
+    }
+  }, [AdUnit]);
+
+
+  const goToAttendenceDetails = () => {
+    navigate('/Ad/attendence', { state: { AdUnit } });
+  };
+  const goToUnitManuals = () => {
+    navigate('/Ad/manuals', { state: { AdUnit } });
+  }; 
+  const goToInsertManuals = () => {
+    navigate('/Ad/insert_manuals', { state: { AdUnit } });
+  };
+  
+
+  return (
+    <>
+      <Navbar />
+      <div className="lgrbg">
+        <div className="tl">
+          <div className="tt3">Welcome</div>
+          <div className="tt4">{AdName}!</div>
         </div>
-    </div>
-    </>
+        <div className="wrapper-lgr">
+          <div className="label-input-pair">
+            <label>Unit:</label>
+            <input type="text" value={AdUnit} readOnly />
+          </div>
+          <div className="label-input-pair">
+            <label>Admin ID:</label>
+            <input type="text" value={AdID} readOnly />
+          </div>
+          <div className="label-input-pair">
+            <label>Volunteers in Unit:</label>
+            <input type="text" value={unitVolunteers} readOnly />
+          </div>
+          <div className="label-input-pair">
+            <label>Manuals Conducted:</label>
+            <input type="text" value={unitManualsConducted} readOnly />
+          </div>
+          <div className="label-input-pair">
+            <label>GS:</label>
+            <input type="text" value={unitGS} readOnly />
+          </div>
+          <div className="label-input-pair">
+            <label>JS:</label>
+            <input type="text" value={unitJS} readOnly />
+          </div>
 
-);
+          {/* <div className="Rememberlg1"> */}
+            {/* <button onClick={goToUserDetails}>Personal Details</button> */}
+          {/* </div> */}
+          {/* <div className="Rememberlg2"> */}
+            {/* <Link to="/user/manuals">Manual Details</Link> */}
+          {/* </div> */}
+          {/* <div className="Rememberlg2"> */}
+            {/* <button onClick={goToUserManuals}>Unit Manuals</button> */}
+          {/* </div> */}
+          <div className="Rememberlg1">
+            <button onClick={goToAttendenceDetails}>Attendence Details</button>
+          </div>
+          
+          <div className="Rememberlg2">
+            <button onClick={goToUnitManuals}>Manuals Details</button>
+          </div>
+
+          <div className="Rememberlg2">
+            <button onClick={goToInsertManuals}>Insert Manuals</button>
+          </div>
+
+
+        </div>
+      </div>
+    </>
+  );
 }
 
-export default Regres;
+export default Logres;

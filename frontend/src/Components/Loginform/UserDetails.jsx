@@ -123,33 +123,33 @@ function UserDetails() {
     return (
         <>
           <Navbar />
-          <div className="lgrbg">
-            <div className="tl">
-              <div className="tt3">Welcome</div>
-              <div className="tt4">{userName}</div>
+          <div className="usrbg">
+            <div className="tlu">
+              <div className="tt3u">Welcome</div>
+              <div className="tt4u">{userName}</div>
             </div>
-            <div className="wrapper-lgr">
-              <div className="label-input-pair">
+            <div className="wrapper-usr">
+              <div className="label-input-pair-u">
                 <label>Roll Number:</label>
                 <input type="text" value={rollno} readOnly />
               </div>
-              <div className="label-input-pair">
+              <div className="label-input-pair-u">
                 <label>Email:</label>
                 <input type="text"  value={userEmail} readOnly />
               </div>
-              <div className="label-input-pair">
+              <div className="label-input-pair-u">
                 <label>Date of Birth:</label>
                 <input type="text" value={Dob1} readOnly />
               </div>
-              <div className="label-input-pair">
+              <div className="label-input-pair-u">
                 <label>Joining Date:</label>
                 <input type="text" value={joinDate1} readOnly />
               </div>
-              <div className="label-input-pair">
+              <div className="label-input-pair-u">
                 <label>Role:</label>
                 <input type="text" value={userRole} readOnly />
               </div>
-              <div className="label-input-pair">
+              <div className="label-input-pair-u">
                 <label>Manuals Attended:</label>
                 <input type="text" value={userManualsAttended} readOnly />
               </div>

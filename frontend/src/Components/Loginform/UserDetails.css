@@ -5,7 +5,7 @@ body, html {
   height: 100%;
 }
 
-.lgrbg {
+.usrbg {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -18,11 +18,11 @@ body, html {
   width: 100vw;
 }
 
-.wrapper-lgr {
+.wrapper-usr {
   width: 800px; /* Increased width to accommodate labels */
-  border: 2px solid rgba(255, 255, 255, 0.2);
+  /* border: 2px solid rgba(255, 255, 255, 0.2); */
   color: #fff;
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+  /* box-shadow: 0 0 10px rgba(255, 255, 255, 0.2); */
   border-radius: 20px;
   padding: 30px 40px 40px 40px;
   margin-top: 100px; /* Increased margin-top */
@@ -31,7 +31,7 @@ body, html {
   gap: 20px;
 }
 
-.label-input-pair {
+.label-input-pair-u {
   display: flex;
   align-items: center;
   background-color: rgba(0, 0, 0, 0.8); 
@@ -42,7 +42,7 @@ body, html {
   width: 105%;
 }
 
-.label-input-pair label {
+.label-input-pair-u label {
   color: #fff;
   font-size: 16px;
   width: 150px; /* Fixed width for labels */
@@ -50,7 +50,7 @@ body, html {
   margin-right: 10px;
 }
 
-.label-input-pair input {
+.label-input-pair-u input {
   width: 250%;
   height: 40px;
   background-color: rgba(0, 0, 0, 0.8);
@@ -63,7 +63,7 @@ body, html {
   box-sizing: border-box; /* Ensure padding and border are included in the element's total width and height */
 }
 
-.tt3 {
+.tt3u {
   text-align: right;
   margin-bottom: -5px !important; /* Reduced margin-bottom */
   color: black;
@@ -72,7 +72,7 @@ body, html {
   display: block;
 }
 
-.tt4 {
+.tt4u {
   text-align: right;
   margin-top: -20px !important;
   margin-bottom: 10px;
@@ -82,21 +82,21 @@ body, html {
   display: block;
 }
 
-.tl {
+.tlu {
   position: absolute;
   top: 80px;
   right: 40px;
   text-align: right;
 }
 
-.wrapper-lgr .Rememberlg{
+.wrapper-usr .Rememberlg{
   display: flex;
   align-items: center;
   justify-content:space-between;
   font-size: 14.5;
   margin: -15px 0px 15px;  
 }
-.wrapper-lgr .Rememberlg2{
+.wrapper-usr .Rememberlg2{
   display: flex;
   align-items: center;
   justify-content:flex-end;
@@ -104,18 +104,5 @@ body, html {
   margin: -15px 0px 15px; 
    
 }
-.Rememberlg a {
-  color:black;
-  text-decoration: none;
-}
-.Rememberlg a:hover {
-  text-decoration: underline;
-}
-.Rememberlg2 a {
-  color:black;
-  text-decoration: none;
-}
-.Rememberlg2 a:hover {
-  text-decoration: underline;
-}
+
 
