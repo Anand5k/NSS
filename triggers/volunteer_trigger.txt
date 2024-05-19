@@ -1,0 +1,59 @@
+CREATE OR REPLACE FUNCTION assign_unit_no() RETURNS TRIGGER AS $$
+DECLARE 
+    max_unit_no_m INT;
+    max_unit_no_f INT;
+    new_volunteerid INT;
+    year_of_study INT;
+    year_dob INT;
+BEGIN
+    -- Get the maximum unit number that has been assigned so far.
+    SELECT unit_no INTO max_unit_no_m FROM volunteers WHERE volunteer_id = (SELECT MAX(volunteer_id) FROM volunteers WHERE gender = 'M');
+    SELECT unit_no INTO max_unit_no_f FROM volunteers WHERE volunteer_id = (SELECT MAX(volunteer_id) FROM volunteers WHERE gender = 'F');
+    SELECT MAX(volunteer_id) + 1 INTO new_volunteerid FROM volunteers;
+    
+    -- Extract year of birth from the NEW row
+    SELECT EXTRACT(YEAR FROM NEW.date_of_birth) INTO year_dob;
+    
+    -- If this is the first male volunteer or max unit number for male is 4, assign unit number 1.
+    IF NEW.gender = 'M' AND ((max_unit_no_m IS NULL) OR (max_unit_no_m = 3)) THEN
+        NEW.unit_no := 1;
+    -- If this is the second or subsequent male volunteer, increment the max unit number for males.
+    ELSIF NEW.gender = 'M' THEN
+        NEW.unit_no := max_unit_no_m + 1;
+    -- If this is the first female volunteer or max unit number for female is 4, assign unit number 1.
+    ELSIF NEW.gender = 'F' AND ((max_unit_no_f) IS NULL OR (max_unit_no_f = 3)) THEN
+        NEW.unit_no := 1;
+    -- If this is the second or subsequent female volunteer, increment the max unit number for females.
+    ELSIF NEW.gender = 'F' THEN
+        NEW.unit_no := max_unit_no_f + 1;
+    END IF;
+
+    -- Determine the year before joined based on year of birth
+    IF year_dob = 2002 THEN 
+        NEW.current_year := 4;
+    ELSEIF year_dob = 2003 THEN
+        NEW.current_year := 3;
+    ELSEIF year_dob = 2004 THEN
+        NEW.current_year := 2;
+    ELSEIF year_dob = 2005 THEN
+        NEW.current_year := 1;
+    
+    else new.current_year := NULL;
+    END IF;
+
+    -- Assign contact_id based on unit_no
+    
+    
+    -- Assign volunteer_id sequentially
+  
+    
+    NEW.joining_date := TO_CHAR(CURRENT_DATE, 'YYYY-MM-DD');
+    --insert into contact (contact_id) values (NEW.contact_id);
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE TRIGGER assign_unit_no
+BEFORE INSERT ON volunteers
+FOR EACH ROW
+EXECUTE FUNCTION assign_unit_no();

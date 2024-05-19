@@ -1,0 +1,14 @@
+CREATE OR REPLACE FUNCTION volunteer_remove()
+RETURNS TRIGGER AS $$
+begin
+  delete from volunteers where volunteer_id = NEW.alumni_id;
+
+
+    RETURN NEW; 
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE or replace TRIGGER volunteer_remove
+AFTER insert ON alumni
+FOR EACH ROW
+EXECUTE FUNCTION volunteer_remove();

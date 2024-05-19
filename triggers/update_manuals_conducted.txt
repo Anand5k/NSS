@@ -1,0 +1,18 @@
+CREATE OR REPLACE FUNCTION update_manuals_conducted()
+RETURNS TRIGGER AS $$
+BEGIN
+    
+    UPDATE unit
+    SET manuals_conducted = manuals_conducted + 1
+    WHERE unit_no = NEW.unit_no;
+    
+    RETURN NEW;
+END;
+$$
+LANGUAGE plpgsql;
+
+
+CREATE OR replace TRIGGER update_manuals_conducted_trigger
+AFTER INSERT ON manuals
+FOR EACH ROW
+EXECUTE FUNCTION update_manuals_conducted();

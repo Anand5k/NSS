@@ -1,0 +1,22 @@
+[{
+  "pro_id": 5001,
+  "name": John Doe,
+  "designation": Professor,
+  "department": CSE,
+  "email": john.doe@gmail.com,
+  "password": $2b$10$NRaSbti42X2m7HXafjCVyeeMC2gjjbFCHpqIDZLs8balH.AsD2dYW
+}, {
+  "pro_id": 5002,
+  "name": Jane Smith,
+  "designation": Assistant Professor,
+  "department": IT,
+  "email": jane.smith@gmail.com,
+  "password": $2b$10$NRaSbti42X2m7HXafjCVyeeMC2gjjbFCHpqIDZLs8balH.AsD2dYW
+}, {
+  "pro_id": 5003,
+  "name": Alice Johnson,
+  "designation": Lecturer,
+  "department": ECE,
+  "email": alice.johnson@gmail.com,
+  "password": $2b$10$NRaSbti42X2m7HXafjCVyeeMC2gjjbFCHpqIDZLs8balH.AsD2dYW
+}]

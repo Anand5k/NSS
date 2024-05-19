@@ -1,0 +1,5 @@
+UPDATE unit
+SET no_of_volunteers = (
+    SELECT COUNT(*) FROM volunteers WHERE unit_no = 'specific_unit_number'
+)
+WHERE unit_no = 'specific_unit_number';

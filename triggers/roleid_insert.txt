@@ -1,0 +1,14 @@
+CREATE OR REPLACE FUNCTION role_id()
+RETURNS TRIGGER AS $$
+begin
+  insert into volunteer_roles(volunteer_id,role_id) values (NEW.volunteer_id , 1);
+
+
+    RETURN NULL; 
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE or replace TRIGGER role_id_insert
+AFTER insert ON volunteers
+FOR EACH ROW
+EXECUTE FUNCTION role_id();

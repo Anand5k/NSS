@@ -1,0 +1,22 @@
+
+CREATE OR REPLACE FUNCTION update_no_of_volunteers()
+RETURNS TRIGGER AS $$
+BEGIN
+  IF (TG_OP = 'INSERT') THEN
+    UPDATE unit SET no_of_volunteers = no_of_volunteers + 1 WHERE unit_no = NEW.unit_no;
+  ELSIF (TG_OP = 'DELETE') THEN
+    UPDATE unit SET no_of_volunteers = no_of_volunteers - 1 WHERE unit_no = OLD.unit_no;
+  ELSIF (TG_OP = 'UPDATE') THEN
+    IF (NEW.unit_no <> OLD.unit_no) THEN
+      UPDATE unit SET no_of_volunteers = no_of_volunteers + 1 WHERE unit_no = NEW.unit_no;
+      UPDATE unit SET no_of_volunteers = no_of_volunteers - 1 WHERE unit_no = OLD.unit_no;
+    END IF;
+  END IF;
+  RETURN NULL;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE or replace TRIGGER update_no_of_members_trigger
+AFTER INSERT OR DELETE OR UPDATE ON volunteers
+FOR EACH ROW
+EXECUTE FUNCTION update_no_of_volunteers();

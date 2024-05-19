@@ -1,0 +1,4 @@
+"pro_id","name","designation","department","email","password"
+5001,John Doe,Professor,CSE,john.doe@gmail.com,$2b$10$NRaSbti42X2m7HXafjCVyeeMC2gjjbFCHpqIDZLs8balH.AsD2dYW
+5002,Jane Smith,Assistant Professor,IT,jane.smith@gmail.com,$2b$10$NRaSbti42X2m7HXafjCVyeeMC2gjjbFCHpqIDZLs8balH.AsD2dYW
+5003,Alice Johnson,Lecturer,ECE,alice.johnson@gmail.com,$2b$10$NRaSbti42X2m7HXafjCVyeeMC2gjjbFCHpqIDZLs8balH.AsD2dYW

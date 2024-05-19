@@ -1,0 +1,4 @@
+
+
+
+select *from contact where contact_id in (select contact_id from contact group by contact_id having count(contact_id) > 1 );

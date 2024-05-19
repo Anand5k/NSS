@@ -1,0 +1,26 @@
+CREATE OR REPLACE FUNCTION move_to_alumni()
+RETURNS TRIGGER AS $$
+DECLARE
+    years_out INT;
+BEGIN
+    -- Calculate the current year
+    years_out := EXTRACT(YEAR FROM CURRENT_DATE);
+
+    -- Check if the years before joining is greater than 4 and the volunteer has not already been moved to alumni
+    IF NEW."current_year" > 4 THEN
+        -- Insert the volunteer into the alumni table
+        INSERT INTO alumni ("alumni_id", "year_of_passing", "name", "unit_no","email")
+        VALUES (NEW."volunteer_id", years_out, NEW."name", NEW."unit_no",NEW."email");
+        delete from  volunteers where volunteer_id = new.volunteer_id;
+    END IF;
+
+    RETURN NULL; -- Since this is an AFTER trigger, returning NULL means the original operation is not interrupted.
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE or replace TRIGGER move_to_alumni
+BEFORE UPDATE ON volunteers
+FOR EACH ROW
+EXECUTE FUNCTION move_to_alumni();
+
+
