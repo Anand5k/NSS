@@ -70,6 +70,7 @@ function AdVolunteersDetails() {
                 <th>Email</th>
                 <th>Role</th>
                 <th>Manuals Participated</th>
+                <th>Phone Number</th>
               </tr>
             </thead>
             <tbody>
@@ -80,6 +81,7 @@ function AdVolunteersDetails() {
                   <td>{volunteer.email}</td>
                   <td>{volunteer.role}</td>
                   <td>{volunteer.no_of_manuals_attended}</td>
+                  <td>{volunteer.phone_numbers}</td>
                 </tr>
               ))}
             </tbody>

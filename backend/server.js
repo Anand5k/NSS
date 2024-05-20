@@ -747,7 +747,8 @@ app.get('/Ad/volunteerDetails', async (req, res) => {
     v.name,
     v.email,
     r.title AS role,
-    COUNT(p.volunteer_id) AS no_of_manuals_attended
+    COUNT(DISTINCT p.volunteer_id) AS no_of_manuals_attended,
+    STRING_AGG(DISTINCT c.phone_no, ', ') AS phone_numbers
 FROM 
     volunteers v
 LEFT JOIN 
@@ -756,12 +757,15 @@ LEFT JOIN
     roles r ON vr.role_id = r.role_id
 LEFT JOIN 
     participations p ON v.volunteer_id = p.volunteer_id
+LEFT JOIN 
+    contact c ON v.volunteer_id = c.contact_id
 WHERE 
     v.unit_no = $1
 GROUP BY 
     v.volunteer_id, v.name, v.email, r.title
 ORDER BY 
     v.volunteer_id ASC;
+
 
     `;
     const result = await db.query(query, [unit]);
