@@ -91,6 +91,47 @@ app.post('/forgetPassword', async (req, res) => {
   }
 });
 
+app.post('/user/addPhoneno', async (req, res) => {
+  try {
+    const { rollno, phoneno } = req.body;
+    
+    // Check if the user exists
+    const result = await db.query('SELECT * FROM volunteers WHERE volunteer_id = $1', [rollno]);
+    if (result.rows.length === 0) {
+      return res.status(401).json({ error: 'User not exists' });
+    }
+
+    // Hash the new password
+    
+    
+    // Update the user's password
+    await db.query('INSERT INTO contact (contact_id,phone_no)  values ($1,$2) ',[rollno,phoneno]);
+    //console.log('PhoneNo. Added successfully');
+    res.status(201).json({ message: 'User phoneNo. Added successfully' });
+  } catch (error) {
+    console.error('Error Adding PhoneNo.:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+
+app.post('/user/updatePhoneno', async (req, res) => {
+  try {
+    const { rollno, phoneno, newPhoneno } = req.body;
+    
+    // Check if the user exists
+    const result = await db.query('SELECT * FROM contact WHERE contact_id = $1 and phone_no = $2', [rollno, phoneno]);
+    if (result.rows.length === 0) {
+      return res.status(401).json({ error: 'User phone Number not exists' });
+    }
+    await db.query('Update contact set phone_no = $3 WHERE contact_id = $1 and phone_no = $2 ',[rollno,phoneno,newPhoneno]);
+    //console.log('PhoneNo. Added successfully');
+    res.status(201).json({ message: 'User phoneNo. Updated successfully' });
+  } catch (error) {
+    console.error('Error Updating PhoneNo.:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
 
 app.post('/login', async (req, res) => {
   try {

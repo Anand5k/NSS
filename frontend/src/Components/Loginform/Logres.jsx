@@ -144,6 +144,13 @@ function Logres() {
   const goToUserManuals = () => {
     navigate('/user/manuals', { state: { userUnit } });
   };
+  const goToUserUpdatephoneno = () => {
+    navigate('/user/updatePhoneno', { state: { rollno } });
+  };
+  const goToUserAddPhoneno = () => {
+    navigate('/user/addPhoneno', { state: { rollno } });
+  };
+
   
 
   return (
@@ -187,6 +194,13 @@ function Logres() {
           <div className="Rememberlg2">
             <button onClick={goToUserManuals}>Unit Manuals</button>
           </div>
+          <div className="Rememberlg2">
+            <button onClick={goToUserUpdatephoneno}>Update PhoneNo</button>
+          </div>
+          <div className="Rememberlg2">
+            <button onClick={goToUserAddPhoneno}>Add PhoneNo.</button>
+          </div>
+
         </div>
       </div>
     </>

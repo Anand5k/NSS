@@ -13,6 +13,10 @@ import UserManuals from './Components/Loginform/UserManuals'
 import InsertManuals from './Components/Loginform/InsertManuals'
 import AdManuals from './Components/Loginform/AdManuals'
 import AdAttendence from './Components/Loginform/AdAttendence'
+import UserUpdatePhoneno from './Components/Loginform/UserUpdatePhoneno'
+import UserAddPhoneno from './Components/Loginform/UserAddPhoneno'
+
+
 function App() {
   return (
     <div className="full">
@@ -29,6 +33,8 @@ function App() {
         <Route key={10} index path='/Ad/insert_manuals' element={<InsertManuals/>}></Route>
         <Route key={11} index path='/Ad/manuals' element={<AdManuals/>}></Route>
         <Route key={12} index path='/Ad/attendence' element={<AdAttendence/>}></Route>
+        <Route key={13} index path='/user/updatePhoneno' element={<UserUpdatePhoneno/>}></Route>
+        <Route key={14} index path='/user/addPhoneno' element={<UserAddPhoneno/>}></Route>
       </Routes>
     </div>
   );
