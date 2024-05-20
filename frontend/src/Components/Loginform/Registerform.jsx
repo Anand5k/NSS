@@ -37,7 +37,7 @@ function Registerform (){
         //footer: '<a href="#">Why do I have this issue?</a>'
       });
       
-      navigate("/login")
+      navigate('/Regres', { state: { email } });
       
     } catch (error) {
       console.error('Error signing up:', error.response.data.error);

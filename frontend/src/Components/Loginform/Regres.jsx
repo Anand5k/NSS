@@ -86,9 +86,11 @@ function Logres() {
     navigate('/Ad/manuals', { state: { AdUnit } });
   }; 
   const goToInsertManuals = () => {
-    navigate('/Ad/insert_manuals', { state: { AdUnit } });
+    navigate('/Ad/insertManual', { state: { AdUnit, AdEmail } });
   };
-  
+  const goToVolunteersDetails = () => {
+    navigate('/Ad/volunteersDetails', { state: { AdUnit } });
+  };
 
   return (
     <>
@@ -143,6 +145,9 @@ function Logres() {
 
           <div className="Rememberlg2">
             <button onClick={goToInsertManuals}>Insert Manuals</button>
+          </div>
+          <div className="Rememberlg2">
+            <button onClick={goToVolunteersDetails}>Volunteers Details</button>
           </div>
 
 

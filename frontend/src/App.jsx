@@ -15,6 +15,8 @@ import AdManuals from './Components/Loginform/AdManuals'
 import AdAttendence from './Components/Loginform/AdAttendence'
 import UserUpdatePhoneno from './Components/Loginform/UserUpdatePhoneno'
 import UserAddPhoneno from './Components/Loginform/UserAddPhoneno'
+import AdManualInsert from './Components/Loginform/AdManualInsert';
+import AdVolunteersDetails from './Components/Loginform/AdVolunteersDetails';
 
 
 function App() {
@@ -35,6 +37,8 @@ function App() {
         <Route key={12} index path='/Ad/attendence' element={<AdAttendence/>}></Route>
         <Route key={13} index path='/user/updatePhoneno' element={<UserUpdatePhoneno/>}></Route>
         <Route key={14} index path='/user/addPhoneno' element={<UserAddPhoneno/>}></Route>
+        <Route key={15} index path='/Ad/insertManual' element={<AdManualInsert/>}></Route>
+        <Route key={16} index path='/Ad/volunteersDetails' element={<AdVolunteersDetails/>}></Route>
       </Routes>
     </div>
   );

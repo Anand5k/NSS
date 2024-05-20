@@ -1,4 +1,4 @@
-import "./UserManuals.css";
+import "./AdManuals.css";
 import Navbar from "./Navbar";
 import axios from 'axios';
 import { useState, useEffect } from "react";

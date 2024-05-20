@@ -67,6 +67,8 @@ app.post('/signup', async (req, res) => {
   }
 });
 
+
+
 app.post('/forgetPassword', async (req, res) => {
   try {
     const { rollno, email, password } = req.body;
@@ -697,6 +699,86 @@ app.get('/Ad/attendence', async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
+
+app.post('/Ad/manualInsert', async (req, res) => {
+  try {
+    const { AdUnit, theme, description, manualDate, duration, Location, LO, absentees  } = req.body;
+    await db.query('INSERT INTO manuals (  unit_no, theme, description, date, duration, location, lead_organiser ) VALUES ($1, $2, $3, $4, $5, $6, $7)', [AdUnit,  theme, description, manualDate, duration, Location, LO]);
+    
+    const attendanceQuery = `
+    WITH max_manual AS (
+      SELECT MAX(manual_id) AS manual_id
+      FROM manuals
+    ),
+    filtered_volunteers AS (
+      SELECT volunteer_id
+      FROM volunteers
+      WHERE unit_no = $1
+      AND volunteer_id::text != ALL (string_to_array($2, ','))
+    )
+    INSERT INTO participations (volunteer_id, manual_id)
+    SELECT fv.volunteer_id, mm.manual_id
+    FROM filtered_volunteers fv, max_manual mm;
+    
+    `;
+
+    await db.query(attendanceQuery, [AdUnit,absentees]);
+    res.status(201).json({ message: 'Manual inserted successfully' });
+  } catch (error) {
+    console.error('Error While Insert Manual:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+app.get('/Ad/volunteerDetails', async (req, res) => {
+  // Extract unit from query parameters
+  const { unit } = req.query;
+
+  // Check if unit is provided
+  if (!unit) {
+    return res.status(400).json({ error: 'Unit is required' });
+  }
+
+  try {
+    // Query the database to fetch manuals based on unit
+    const query = `
+    SELECT 
+    v.volunteer_id,
+    v.name,
+    v.email,
+    r.title AS role,
+    COUNT(p.volunteer_id) AS no_of_manuals_attended
+FROM 
+    volunteers v
+LEFT JOIN 
+    volunteer_roles vr ON v.volunteer_id = vr.volunteer_id
+LEFT JOIN 
+    roles r ON vr.role_id = r.role_id
+LEFT JOIN 
+    participations p ON v.volunteer_id = p.volunteer_id
+WHERE 
+    v.unit_no = $1
+GROUP BY 
+    v.volunteer_id, v.name, v.email, r.title
+ORDER BY 
+    v.volunteer_id ASC;
+
+    `;
+    const result = await db.query(query, [unit]);
+
+    // Check if manuals with the provided unit exist
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'No volunteers Details  found for the provided unit by admin' });
+    }
+
+    // Send the manuals in the response
+    res.json({ details: result.rows });
+  } catch (error) {
+    console.error('Error fetching volunteers Details by Admin:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
 
 app.get('/Ad/ID_name', async (req, res) => {
   // Extract user_id from query parameters
