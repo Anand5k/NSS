@@ -5,7 +5,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import {useNavigate} from 'react-router-dom';
 import Swal from 'sweetalert2'
-import Navbar from './Navbar'
+import Navad from './Navad'
 
 
 function Adloginform () {
@@ -46,7 +46,7 @@ function Adloginform () {
 
     return(
       <>
-      <Navbar/>
+      <Navad/>
         <div className="adlnbg">
             <div className='wrapper-adln'>
                 <form onSubmit={handleAdLogin}>

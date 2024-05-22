@@ -1,6 +1,15 @@
 .usrmbg {
-    padding: 20px;
-    color: #fff; /* Ensure text is visible against dark background */
+  padding: 20px;
+  color: #fff;
+  background-image: url('../../assets/tablebg.svg');
+  background-position:center;
+  background-repeat: no-repeat;
+  object-fit:cover;
+  background-size:cover;
+  background-attachment: fixed;
+  overflow: hidden;
+  min-height:100vh;
+  width:100vw;
 }
 
 .manuals-table {
@@ -43,3 +52,33 @@
 .error-message {
     color: red;
 }
+
+::-webkit-scrollbar {
+    display:none;
+  }
+
+  #search-input {
+    background-color: rgba(0, 0, 0, 0.5); /* Adjust the alpha value (0.5) for transparency */
+    color: rgb(255, 255, 255); /* Text color */
+    border: none; /* Remove border */
+    padding: 10px; /* Adjust padding as needed */
+    border-radius: 5px; /* Add border radius for rounded corners */
+    width: 100%; /* Set width to fill container */
+    margin-bottom: 10px; /* Add margin for spacing */
+    margin-top: 20px; /* Add top margin */
+  }
+  
+  #search-input::placeholder {
+    color: rgba(255, 255, 255, 0.7); /* Adjust the alpha value (0.7) for placeholder transparency */
+  }
+  
+  .no-results-container {
+    padding: 10px;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
+  }
+  
+  .no-results-text {
+    color: rgb(255, 255, 255); /* Text color */
+  }
+  
+  

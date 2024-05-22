@@ -1,5 +1,5 @@
 import "./UserDetails.css";
-import Navbar from "./Navbar";
+import Navlog from "./Navlog";
 import axios from 'axios';
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
@@ -122,7 +122,7 @@ function UserDetails() {
 
     return (
         <>
-          <Navbar />
+          <Navlog />
           <div className="usrbg">
             <div className="tlu">
               <div className="tt3u">Welcome</div>

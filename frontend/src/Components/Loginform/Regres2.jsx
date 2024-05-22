@@ -2,61 +2,30 @@ import { useState, useEffect } from 'react';
 import { useNavigate, useLocation} from 'react-router-dom';
 import axios from 'axios';
 import Navreg from './Navreg';
-import './Regres.css';
+import './Regres2.css';
 
 
-function Logres() {
+function Regres2() {
     const navigate = useNavigate();
     const location = useLocation();
-    const [AdEmail, setAdEmail] = useState('');
+    
 
     useEffect(() => {
-        const { email } = location.state || {};
-        setAdEmail(email || '');  // Default to empty string if rollno is undefined
+        const { unitNo } = location.state || {};
+        setAdUnit(unitNo || '');  // Default to empty string if rollno is undefined
     }, [location.state]);
 
 
   const [AdID, setAdID] = useState('');
-  const [AdName, setAdName] = useState('');
+
   const [AdUnit, setAdUnit] = useState('');
   const [unitManualsConducted, setUnitManualsConducted] =  useState('');
   const [unitGS, setUnitGS]= useState('');
   const [unitJS, setUnitJS]= useState('');
   const [unitVolunteers, setUnitVolunteers]= useState('');
-  useEffect(() => {
-    const fetchAdID_Name = async () => {
-      try {
-        const response = await axios.get(`http://localhost:5000/Ad/ID_name`, {
-          params: { email: AdEmail },
-        });
-        setAdID(response.data.proid);
-        setAdName(response.data.AdName);
-      } catch (error) {
-        console.error("Error:", error);
-      }
-    };
-    if (AdEmail) {
-      fetchAdID_Name();
-    }
-  }, [AdEmail]);
+  
 
-  useEffect(() => {
-    const fetchAdUnit = async () => {
-      try {
-        const response = await axios.get(`http://localhost:5000/Ad/unit`, {
-          params: { pro_id: AdID },
-        });
-        
-        setAdUnit(response.data.AdUnit);
-      } catch (error) {
-        console.error("Error:", error);
-      }
-    };
-    if (AdEmail) {
-      fetchAdUnit();
-    }
-  }, [AdID]);
-
+ 
   useEffect(() => {
     const fetchUnitDetails = async () => {
       try {
@@ -85,30 +54,33 @@ function Logres() {
   const goToUnitManuals = () => {
     navigate('/Ad/manuals', { state: { AdUnit } });
   }; 
-  const goToInsertManuals = () => {
-    navigate('/Ad/insertManual', { state: { AdUnit, AdEmail } });
-  };
+  
   const goToVolunteersDetails = () => {
     navigate('/Ad/volunteersDetails', { state: { AdUnit } });
+  };
+
+  const handleUpdateProgramOfficer = (e) => {
+    e.preventDefault();
+    navigate('/Ad/update', { state: { AdUnit } });
   };
 
   return (
     <>
       <Navreg />
       <div className="lgrbg">
-        <div className="tl">
+        {/* <div className="tl">
           <div className="tt3">Welcome</div>
           <div className="tt4">{AdName}!</div>
-        </div>
+        </div> */}
         <div className="wrapper-lgr">
-          <div className="label-input-pair">
+        <center><div className="label-input-pair">
             <label>Unit:</label>
             <input type="text" value={AdUnit} readOnly />
-          </div>
-          <div className="label-input-pair">
+          </div></center>
+          {/* <div className="label-input-pair">
             <label>Admin ID:</label>
             <input type="text" value={AdID} readOnly />
-          </div>
+          </div> */}
           <div className="label-input-pair">
             <label>Volunteers in Unit:</label>
             <input type="text" value={unitVolunteers} readOnly />
@@ -143,12 +115,15 @@ function Logres() {
             <button onClick={goToUnitManuals}>Manuals Details</button>
           </div>
 
-          <div className="Rememberlg2">
-            <button onClick={goToInsertManuals}>Insert Manuals</button>
-          </div>
+          
           <div className="Rememberlg2">
             <button onClick={goToVolunteersDetails}>Volunteers Details</button>
           </div>
+
+          <div className="Rememberlg2">
+            <button onClick={handleUpdateProgramOfficer}>Update Program Officer</button>
+          </div>
+          
 
 
         </div>
@@ -157,4 +132,4 @@ function Logres() {
   );
 }
 
-export default Logres;
+export default Regres2;

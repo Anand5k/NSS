@@ -1,5 +1,5 @@
-import "./UserManuals.css";
-import Navbar from "./Navbar";
+import "./AdAttendence.css";
+import Navad from "./Navad";
 import axios from 'axios';
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
@@ -36,12 +36,12 @@ function AdAttendence() {
 
   return (
     <>
-        <Navbar />
-        <div className="usrmbg">
+        <Navad/>
+        <div className="adattbg">
             <h1>Attendence Table</h1>
             {error && <p className="error-message">{error}</p>}
             {attendence.length > 0 ? (
-                <table className="manuals-table">
+                <table className="adatt-table">
                     <thead>
                         <tr>
                             <th>Manual ID</th>
@@ -50,7 +50,7 @@ function AdAttendence() {
                             {/* <th className="date-col">Date</th> */}
                             <th>no_of_present</th>
                             <th>no_of_absent</th>
-                            <th className="description-col">absentees_volunteer_id</th>
+                            <th className="abs-col">absentees_volunteer_id</th>
                         </tr>
                     </thead>
                     <tbody>

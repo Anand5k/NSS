@@ -8,13 +8,14 @@ import  { useState } from 'react';
 import {useNavigate} from 'react-router-dom';
 import Swal from 'sweetalert2'
 import axios from 'axios';
-import Navbar from './Navbar'
+import Navreg from './Navreg'
 
 function Registerform (){
     
     const [name, setUsername] = useState(''); 
     const [rollno, setRollno] = useState('');
     const [dob, setDob] = useState('');
+    const [currentYear, setCurrentYear] = useState('');
     const [phoneno, setPhoneno] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -28,16 +29,16 @@ function Registerform (){
   const handleSignup = async (e) => {
     try {
          e.preventDefault();
-      await axios.post('http://localhost:5000/signup', { name , rollno, gender , dob, phoneno, email, password});
+      await axios.post('http://localhost:5000/signup', { name , rollno, gender , dob, phoneno, email, password, currentYear});
       console.log('Signup successful');
       Swal.fire({
         icon: "success",
-        title: "Login Successfully",
+        title: "Sign Up Successfully",
         text: "You will be Redirected to Login Page",
         //footer: '<a href="#">Why do I have this issue?</a>'
       });
       
-      navigate('/Regres', { state: { email } });
+      navigate('/login');
       
     } catch (error) {
       console.error('Error signing up:', error.response.data.error);
@@ -56,7 +57,7 @@ function Registerform (){
   };
     return(
         <>
-        <Navbar/>
+        <Navreg/>
         <div className="rgbg">    
         <div className='wrapper-rg'>
             <form action=''>
@@ -81,8 +82,21 @@ function Registerform (){
                         <label value="O" htmlFor="option3">Other</label>
                     </div>   
                 <div className='input-box'>
-                    <input type='date' placeholder='D.O.B' value={dob} onChange={(e) => setDob(e.target.value)} required />
+                  <input 
+                  type="text" 
+                  onFocus={(e) => e.target.type = 'date'} 
+                  onBlur={(e) => !e.target.value && (e.target.type = 'text') && (e.target.value = 'D.O.B') }
+                  value={dob} 
+                  onChange={(e) => setDob(e.target.value)} 
+                  required 
+                />
                 </div>
+                <div className='input-box'>
+                    <input type='int' placeholder='Current Year' value={currentYear} onChange={(e) => setCurrentYear(e.target.value)} pattern="20\d{8}" title="Please enter a valid current Year (<4)" required />
+                    <FaHashtag className='icon'/>
+                </div>
+                
+
                 <div className='input-box'>
                 <input type="tel" placeholder="Phone no" value={phoneno} onChange={(e) => setPhoneno(e.target.value)} pattern="\d{10}" title="Please enter a valid phone number starting with 20 and consisting of 10 digits" required />
                     <FaPhone className='icon'/>

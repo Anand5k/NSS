@@ -1,9 +1,9 @@
 import './Home.css';
-import Navbar from './Navbar'
+import Navhome from './Navhome'
 const Home = () => {
     return(
     <>
-     <Navbar/> 
+     <Navhome/> 
         <div className="hmbg">
             <h1>
             <span className='tt1'>Congrats! </span>

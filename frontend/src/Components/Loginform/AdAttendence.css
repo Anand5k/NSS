@@ -1,9 +1,18 @@
-.usrmbg {
+.adattbg {
   padding: 20px;
-  color: #fff; /* Ensure text is visible against dark background */
+  color: #fff;
+  background-image: url('../../assets/tablebg2.svg');
+  background-position:center;
+  background-repeat: no-repeat;
+  object-fit:cover;
+  background-size:cover;
+  background-attachment: fixed;
+  overflow: hidden;
+  min-height:100vh;
+  width:100vw;
 }
 
-.manuals-table {
+.adatt-table {
   width: 100%;
   margin: 20px 0;
   border-collapse: collapse;
@@ -13,33 +22,34 @@
   overflow: hidden; /* Ensures the border radius applies properly */
 }
 
-.manuals-table th,
-.manuals-table td {
+.adatt-table th,
+.adatt-table td {
   padding: 10px;
   text-align: left;
   border: 1px solid rgba(255, 255, 255, 1); /* White border lines */
 }
 
-.manuals-table th {
+.adatt-table th {
   background-color: rgba(0, 0, 0, 0.7);
 }
 
-.manuals-table tbody tr:hover {
+.adatt-table tbody tr:hover {
   background-color: rgba(0, 0, 0, 0.4);
 }
 
-.manuals-table thead tr {
+.adatt-table thead tr {
   background-color: rgba(255, 255, 255, 0.2);
 }
 
-.manuals-table .description-col {
+.adatt-table .abs-col {
   width: 30%; /* Reduced width for description column */
 }
 
-.manuals-table .date-col {
-  width: 10%; /* Increased width for date column */
-}
 
 .error-message {
   color: red;
+}
+
+::-webkit-scrollbar {
+  display:none;
 }

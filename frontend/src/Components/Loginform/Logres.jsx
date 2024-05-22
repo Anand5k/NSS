@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useLocation} from 'react-router-dom';
 import axios from 'axios';
-import Navbar from './Navbar';
+import Navlog from './Navlog';
 import './Logres.css';
 
 function Logres() {
@@ -155,13 +155,13 @@ function Logres() {
 
   return (
     <>
-      <Navbar />
+      <Navlog />
       <div className="lgrbg">
         <div className="tl">
           <div className="tt3">Welcome</div>
           <div className="tt4">{userName}!</div>
         </div>
-        <div className="wrapper-lgr">
+        <div className="wrapper-lgrs">
           <div className="label-input-pair">
             <label>Unit:</label>
             <input type="text" value={userUnit} readOnly />

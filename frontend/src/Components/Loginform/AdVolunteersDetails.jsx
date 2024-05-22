@@ -1,5 +1,5 @@
 import "./AdVolunteersDetails.css";
-import Navbar from "./Navbar";
+import Navad from "./Navad";
 import axios from 'axios';
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
@@ -47,8 +47,8 @@ function AdVolunteersDetails() {
 
   return (
     <>
-      <Navbar />
-      <div className="usrmbg">
+      <Navad/>
+      <div className="adusrbg">
         <h1>Volunteers Details</h1>
         <div className="search-container">
           <FaSearch className="search-icon" /> {/* Search icon */}
@@ -62,14 +62,14 @@ function AdVolunteersDetails() {
         </div>
         {error && <p className="error-message">{error}</p>}
         {filteredDetails.length > 0 ? (
-          <table className="manuals-table">
+          <table className="aduser-table">
             <thead>
-              <tr>
+              <tr className="trh">
                 <th>Volunteer ID</th>
                 <th>Name</th>
                 <th>Email</th>
                 <th>Role</th>
-                <th>Manuals Participated</th>
+                <th className="man_ptd">Manuals Participated</th>
                 <th>Phone Number</th>
               </tr>
             </thead>

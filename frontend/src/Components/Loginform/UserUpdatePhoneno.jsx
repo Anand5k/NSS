@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate, useLocation } from 'react-router-dom';
 import Swal from 'sweetalert2';
-import Navbar from './Navbar';
+import Navlog from './Navlog';
 
 function UserUpdatePhoneno() {
   const location = useLocation();
@@ -53,7 +53,7 @@ function UserUpdatePhoneno() {
 
   return (
     <>
-      <Navbar />
+      <Navlog />
       <div className="lnbg">
         <div className='wrapper-lg'>
           <form onSubmit={handleUpdatePhoneno}>
