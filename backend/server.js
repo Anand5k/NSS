@@ -61,7 +61,8 @@ app.post('/signup', async (req, res) => {
     await db.query('INSERT INTO volunteers (name , volunteer_id, gender , date_of_birth,  email, password, current_year ) VALUES ($1, $2, $3, $4, $5, $6, $7)', [name, rollno, gender , dob,  email, hashedPassword, currentYear]);
     await db.query('INSERT INTO contact (contact_id,phone_no)  values ($1,$2) ',[rollno,phoneno]);
     res.status(201).json({ message: 'User created successfully' });
-  } catch (error) {
+  } 
+  catch (error) {
     console.error('Error signing up:', error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
@@ -75,7 +76,8 @@ app.post('/Ad/update', async (req, res) => {
     await db.query('UPDATE program_officers set name=$1 ,designation=$2, department=$3, email=$4, password=$5 where pro_id = ( SELECT pro_id FROM unit WHERE unit_no=$6)  ', [ name, designation, department, email, hashedPassword, unit]);
    
     res.status(201).json({ message: 'Program Officer Updated Succesfully successfully' });
-  } catch (error) {
+  } 
+  catch (error) {
     console.error('Error Updating Program Officer:', error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
@@ -89,6 +91,7 @@ app.post('/forgetPassword', async (req, res) => {
     
     // Check if the user exists
     const result = await db.query('SELECT * FROM volunteers WHERE volunteer_id = $1 AND email = $2', [rollno, email]);
+   
     if (result.rows.length === 0) {
       return res.status(401).json({ error: 'User not exists' });
     }
@@ -101,7 +104,8 @@ app.post('/forgetPassword', async (req, res) => {
     
     console.log('Password changed successfully');
     res.status(201).json({ message: 'User Password updated successfully' });
-  } catch (error) {
+  } 
+  catch (error) {
     console.error('Error changing password:', error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
@@ -121,10 +125,13 @@ app.post('/user/addPhoneno', async (req, res) => {
     
     
     // Update the user's password
+    
     await db.query('INSERT INTO contact (contact_id,phone_no)  values ($1,$2) ',[rollno,phoneno]);
+    
     //console.log('PhoneNo. Added successfully');
     res.status(201).json({ message: 'User phoneNo. Added successfully' });
-  } catch (error) {
+  } 
+  catch (error) {
     console.error('Error Adding PhoneNo.:', error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
@@ -140,10 +147,13 @@ app.post('/user/updatePhoneno', async (req, res) => {
     if (result.rows.length === 0) {
       return res.status(401).json({ error: 'User phone Number not exists' });
     }
+    
     await db.query('Update contact set phone_no = $3 WHERE contact_id = $1 and phone_no = $2 ',[rollno,phoneno,newPhoneno]);
+    
     //console.log('PhoneNo. Added successfully');
     res.status(201).json({ message: 'User phoneNo. Updated successfully' });
-  } catch (error) {
+  } 
+  catch (error) {
     console.error('Error Updating PhoneNo.:', error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
@@ -158,6 +168,7 @@ app.post('/login', async (req, res) => {
     if (result.rows.length === 0) {
       return res.status(401).json({ error: 'user not exists' });
     }
+    
     const user = result.rows[0];
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
@@ -166,7 +177,8 @@ app.post('/login', async (req, res) => {
     }
     res.json({ message: 'Login successful' });
     console.log('Login Sucess');
-  } catch (error) {
+  } 
+  catch (error) {
     console.error('Error logging in:', error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
@@ -181,7 +193,9 @@ app.post('/siteAdmin', async (req, res) => {
     if (result.rows.length === 0) {
       return res.status(401).json({ error: 'Site Admin not exists' });
     }
+    
     const user = result.rows[0];
+    
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
       return res.status(401).json({ error: 'Invalid Site ID or password' }),
@@ -189,7 +203,8 @@ app.post('/siteAdmin', async (req, res) => {
     }
     res.json({ message: 'Login successful' });
     //console.log('Login Sucess');
-  } catch (error) {
+  } 
+  catch (error) {
     console.error('Error logging in Site:', error);
     res.status(500).json({ error: 'Internal Server Error Site' });
   }
@@ -219,7 +234,8 @@ app.get('/user/name', async (req, res) => {
 
     // Send the user's name in the response
     res.json({ name: userName });
-  } catch (error) {
+  } 
+  catch (error) {
     console.error('Error fetching user name:', error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
@@ -250,7 +266,8 @@ app.get('/user/Email', async (req, res) => {
 
     // Send the user's name in the response
     res.json({ Email: userEmail });
-  } catch (error) {
+  }
+   catch (error) {
     console.error('Error fetching user Email:', error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
@@ -280,7 +297,8 @@ app.get('/user/DOB', async (req, res) => {
 
     // Send the user's name in the response
     res.json({ DOB: userDOB });
-  } catch (error) {
+  } 
+  catch (error) {
     console.error('Error fetching user 	date_of_birth:', error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
@@ -288,6 +306,7 @@ app.get('/user/DOB', async (req, res) => {
 
 app.get('/manuals', async (req, res) => {
   // Extract unit from query parameters
+  
   const { unit } = req.query;
 
   // Check if unit is provided
