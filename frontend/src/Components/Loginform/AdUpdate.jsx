@@ -25,7 +25,7 @@ function AdUpdate() {
   useEffect(() => {
     const fetchPODetails = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/poUpdate`, {
+        const response = await axios.get(`https://nss-orcin.vercel.app/poUpdate`, {
           params: { unit: unit },
         });
         const data = response.data.detail[0] || {}; // Ensure data is an object and access the first element in detail
@@ -45,7 +45,7 @@ function AdUpdate() {
   const handleUpdate = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:5000/Ad/update', { unit, name, designation, department, email, password });
+      await axios.post('https://nss-orcin.vercel.app/Ad/update', { unit, name, designation, department, email, password });
       console.log('Program Officer Updated successfully');
       Swal.fire({
         icon: "success",
