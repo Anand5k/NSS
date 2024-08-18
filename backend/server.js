@@ -51,7 +51,9 @@ db.connect(); */
   ConnectionString: postgresql://NSS_owner:OZ1FfA7XRnkr@ep-bold-haze-a14k7ohz.ap-southeast-1.aws.neon.tech/NSS?sslmode=require
 }); */
 
-
+app.get('/',async (req,res)=>{
+  return res.status(201).json({ msg: 'OK' });
+})
 
 app.post('/signup', async (req, res) => {
   try {
