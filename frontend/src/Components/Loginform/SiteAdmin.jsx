@@ -17,7 +17,7 @@ function SiteAdmin () {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:5000/siteAdmin', { AdID, password });
+      const response = await axios.post('https://nss-orcin.vercel.app/siteAdmin', { AdID, password });
       console.log('Login successful');
       
       Swal.fire({
