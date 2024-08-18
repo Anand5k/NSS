@@ -20,7 +20,7 @@ function AdVolunteersDetails() {
 
   const fetchVolunteersDetails = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/Ad/volunteerDetails', {
+      const response = await axios.get('https://nss-orcin.vercel.app/Ad/volunteerDetails', {
         params: { unit: AdUnit }
       });
       setVolunteersDetails(response.data.details);
