@@ -29,7 +29,7 @@ function Registerform (){
   const handleSignup = async (e) => {
     try {
          e.preventDefault();
-      await axios.post('http://localhost:5000/signup', { name , rollno, gender , dob, phoneno, email, password, currentYear});
+      await axios.post('https://nss-orcin.vercel.app/signup', { name , rollno, gender , dob, phoneno, email, password, currentYear});
       console.log('Signup successful');
       Swal.fire({
         icon: "success",
