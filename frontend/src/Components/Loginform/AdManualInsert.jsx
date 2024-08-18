@@ -29,7 +29,7 @@ function AdManualInsert() {
   const handleInsertManual = async (e) => {
     try {
       e.preventDefault();
-      await axios.post('http://localhost:5000/Ad/manualInsert', { AdUnit, theme, description, manualDate, duration, Location, LO, absentees });
+      await axios.post('https://nss-orcin.vercel.app//Ad/manualInsert', { AdUnit, theme, description, manualDate, duration, Location, LO, absentees });
       console.log('Manual Inserted successful');
       Swal.fire({
         icon: "success",
