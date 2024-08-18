@@ -22,7 +22,7 @@ function UserUpdatePhoneno() {
     e.preventDefault();
     const rollnoInt = parseInt(rollno, 10);
       try {
-        await axios.post("http://localhost:5000/user/updatePhoneno", {
+        await axios.post("https://nss-orcin.vercel.app/user/updatePhoneno", {
           rollno: rollnoInt,
           phoneno: phoneno,
           newPhoneno: newPhoneno
