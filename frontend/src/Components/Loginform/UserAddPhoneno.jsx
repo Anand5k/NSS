@@ -28,7 +28,7 @@ function UserAddPhoneno() {
 
     if (phoneno === confirmPhoneno) {
       try {
-        await axios.post("http://localhost:5000/user/addPhoneno", {
+        await axios.post("https://nss-orcin.vercel.app/user/addPhoneno", {
           rollno: rollnoInt,
           phoneno: phoneno
         });
