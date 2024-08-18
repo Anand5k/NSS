@@ -17,7 +17,7 @@ function AdAttendence() {
 
   const fetchAttendence = async () => {
       try {
-          const response = await axios.get('https://nss-orcin.vercel.app//Ad/attendence', {
+          const response = await axios.get('https://nss-orcin.vercel.app/Ad/attendence', {
               params: { unit: userUnit }
           });
           setAttendence(response.data.attendence);
