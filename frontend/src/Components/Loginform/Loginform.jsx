@@ -17,7 +17,7 @@ function Loginform () {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:5000/login', { rollno, password });
+      const response = await axios.post('https://nss-orcin.vercel.app/login', { rollno, password });
       console.log('Login successful');
       
       Swal.fire({
