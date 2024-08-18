@@ -13,7 +13,7 @@ function SiteInfo() {
 
   const fetchUnits = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/unit');
+      const response = await axios.get('https://nss-orcin.vercel.app/unit');
       const fetchedUnits = response.data.unit;
       setUnits(fetchedUnits);
       setMaxUnitNo(Math.max(...fetchedUnits.map(unit => unit.unit_no)));
