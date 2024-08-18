@@ -17,7 +17,7 @@ function Adloginform () {
     const handleAdLogin = async (e) => {
         e.preventDefault()
         try {
-          const reps=await axios.post('http://localhost:5000/Adlogin', { email, password });
+          const reps=await axios.post('https://nss-orcin.vercel.app/Adlogin', { email, password });
           console.log(reps)
           console.log('Login successful');
           Swal.fire({
