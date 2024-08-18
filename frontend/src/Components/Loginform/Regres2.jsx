@@ -29,7 +29,7 @@ function Regres2() {
   useEffect(() => {
     const fetchUnitDetails = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/Ad/unitDetails`,{
+        const response = await axios.get(`https://nss-orcin.vercel.app/Ad/unitDetails`,{
             params: { unit: AdUnit },
           }
         );
