@@ -26,7 +26,7 @@ function Logres() {
   useEffect(() => {
     const fetchAdID_Name = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/Ad/ID_name`, {
+        const response = await axios.get(`https://nss-orcin.vercel.app/Ad/ID_name`, {
           params: { email: AdEmail },
         });
         setAdID(response.data.proid);
@@ -43,7 +43,7 @@ function Logres() {
   useEffect(() => {
     const fetchAdUnit = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/Ad/unit`, {
+        const response = await axios.get(`https://nss-orcin.vercel.app/Ad/unit`, {
           params: { pro_id: AdID },
         });
         
@@ -60,7 +60,7 @@ function Logres() {
   useEffect(() => {
     const fetchUnitDetails = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/Ad/unitDetails`,{
+        const response = await axios.get(`https://nss-orcin.vercel.app/Ad/unitDetails`,{
             params: { unit: AdUnit },
           }
         );
