@@ -22,7 +22,7 @@ function ForgetPassword() {
       try {
         e.preventDefault();
 
-        await axios.post("http://localhost:5000/forgetPassword", {
+        await axios.post("https://nss-orcin.vercel.app/forgetPassword", {
           rollno,
           email,
           password,
