@@ -20,7 +20,7 @@ function Logres() {
   useEffect(() => {
     const fetchUserName = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/user/name`, {
+        const response = await axios.get(`https://nss-orcin.vercel.app/user/name`, {
           params: { rollno: rollno },
         });
         setUserName(response.data.name);
@@ -36,7 +36,7 @@ function Logres() {
   useEffect(() => {
     const fetchUserUnit = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/user/unit`, {
+        const response = await axios.get(`https://nss-orcin.vercel.app/user/unit`, {
           params: { rollno: rollno },
         });
         setUserUnit(response.data.unit);
@@ -53,7 +53,7 @@ function Logres() {
     const fetchUserProgramOfficer = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/user/programOfficer`,
+          `https://nss-orcin.vercel.app/user/programOfficer`,
           {
             params: { unit: userUnit },
           }
@@ -72,7 +72,7 @@ function Logres() {
     const fetchUserUnitVolunteers = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/user/unitVolunteers`,
+          `https://nss-orcin.vercel.app/user/unitVolunteers`,
           {
             params: { unit: userUnit },
           }
@@ -90,7 +90,7 @@ function Logres() {
   useEffect(() => {
     const fetchUserUnitGS = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/user/unitGS`, {
+        const response = await axios.get(`https://nss-orcin.vercel.app/user/unitGS`, {
           params: { unit: userUnit },
         });
         setUserUnitGS(response.data.unitGS);
@@ -106,7 +106,7 @@ function Logres() {
   useEffect(() => {
     const fetchUserUnitJS = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/user/unitJS`, {
+        const response = await axios.get(`https://nss-orcin.vercel.app/user/unitJS`, {
           params: { unit: userUnit },
         });
         setUserUnitJS(response.data.unitJS);
@@ -123,7 +123,7 @@ function Logres() {
     const fetchUserUnitManualsConducted = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/user/unitManualsConducted`,
+          `https://nss-orcin.vercel.app/user/unitManualsConducted`,
           {
             params: { unit: userUnit },
           }
