@@ -19,7 +19,7 @@ function UserManuals() {
 
   const fetchManuals = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/manuals', { params: { unit: userUnit } });
+      const response = await axios.get('https://nss-orcin.vercel.app/manuals', { params: { unit: userUnit } });
       setManuals(response.data.manuals);
       setFilteredManuals(response.data.manuals); // Initialize filtered results with all manuals
       setError('');
