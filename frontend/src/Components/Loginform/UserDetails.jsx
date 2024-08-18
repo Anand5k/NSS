@@ -24,7 +24,7 @@ function UserDetails() {
     useEffect(() => {
         const fetchUserEmail = async () => {
           try {
-            const response = await axios.get(`http://localhost:5000/user/Email`, {
+            const response = await axios.get(`https://nss-orcin.vercel.app/user/Email`, {
               params: { rollno: rollno },
             });
             setUserEmail(response.data.Email);
@@ -40,7 +40,7 @@ function UserDetails() {
       useEffect(() => {
         const fetchUserDOB = async () => {
           try {
-            const response = await axios.get(`http://localhost:5000/user/DOB`, {
+            const response = await axios.get(`https://nss-orcin.vercel.app/user/DOB`, {
               params: { rollno: rollno },
             });
             setUserDOB(response.data.DOB);
@@ -56,7 +56,7 @@ function UserDetails() {
       useEffect(() => {
         const fetchUserJoinDate = async () => {
           try {
-            const response = await axios.get(`http://localhost:5000/user/joinDate`, {
+            const response = await axios.get(`https://nss-orcin.vercel.app/user/joinDate`, {
               params: { rollno: rollno },
             });
             setUserJoinDate(response.data.joinDate);
@@ -72,7 +72,7 @@ function UserDetails() {
       useEffect(() => {
         const fetchUserRole = async () => {
           try {
-            const response = await axios.get(`http://localhost:5000/user/role`, {
+            const response = await axios.get(`https://nss-orcin.vercel.app/user/role`, {
               params: { rollno: rollno },
             });
             setUserRole(response.data.role);
@@ -88,7 +88,7 @@ function UserDetails() {
       useEffect(() => {
         const fetchUserName = async () => {
           try {
-            const response = await axios.get(`http://localhost:5000/user/name`, {
+            const response = await axios.get(`https://nss-orcin.vercel.app/user/name`, {
               params: { rollno: rollno },
             });
             setUserName(response.data.name);
@@ -104,7 +104,7 @@ function UserDetails() {
       useEffect(() => {
         const fetchUserManualAttended = async () => {
           try {
-            const response = await axios.get(`http://localhost:5000/user/manualsAttended`, {
+            const response = await axios.get(`https://nss-orcin.vercel.app/user/manualsAttended`, {
               params: { rollno: rollno },
             });
             setUserManualsAttended(response.data.manualCount);
